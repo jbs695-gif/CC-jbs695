@@ -40,4 +40,12 @@ function draw() {
       pop();           // Restore canvas state [5, 7]
     }
   }
+function draw() { 
+  setCenter(width/2, height/2);
+  background(220);
+  stroke('#666');
+  noFill();
+  polarEllipses(30, 40+sin(frameCount/10)*20, 80, 80);
+}
+
 }
