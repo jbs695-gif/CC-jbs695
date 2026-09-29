@@ -5,20 +5,20 @@
 
 function setup() {
   createCanvas(600, 600);
-  angleMode(DEGREES); // Sets angle mode to degrees [4]
-  // Note: noLoop() is removed so draw() can animate! [1, 3]
+  angleMode(DEGREES); // Sets angle mode to degrees 
+  // Note: noLoop() is removed so draw() can animate
 }
 
 function draw() {
   background(240);
   stroke(100, 50, 120);
   strokeWeight(2);
-  noFill(); // Leaves shapes hollow [5]
+  noFill(); // Leaves shapes hollow 
 
   let xSpacing = 80;
   let ySpacing = 80;
 
-  // Calculate a pulsing size using sin() and frameCount [6-8]
+  // Calculate a pulsing size using sin() and frameCount 
   let pulse = 25 + sin(frameCount * 3) * 15; 
 
   for (let x = 60; x < width; x += xSpacing) {
@@ -31,7 +31,7 @@ function draw() {
       // Draw 4-sided polar squares/diamonds that pulse over time
       polarSquares(4, pulse, pulse);
       
-      pop(); // Restore canvas state [9]
+      pop(); // Restore canvas state 
     }
   }
 

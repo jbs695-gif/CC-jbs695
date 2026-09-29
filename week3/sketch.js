@@ -22,13 +22,13 @@ function draw() {
   for (let x = 50; x < width; x += xSpacing) {
     
     // Map the current X position to an angle between 0 and 360 degrees
-    let angle = map(x, 50, width, 0, 360); // [1, 2]
+    let angle = map(x, 50, width, 0, 360); // 
 
     // Inner loop moves down the Y-axis
     for (let y = 60; y < height; y += ySpacing) {
-      push();          // Save current canvas state [5, 7]
-      translate(x, y); // Move origin to current grid spot [8, 9]
-      rotate(angle);   // Rotate around the local origin [3, 4]
+      push();          // Save current canvas state 
+      translate(x, y); // Move origin to current grid spot 
+      rotate(angle);   // Rotate around the local origin 
 
       beginShape();
         vertex(0, -50);
@@ -37,7 +37,7 @@ function draw() {
         vertex(-25, 0);
       endShape(CLOSE);
 
-      pop();           // Restore canvas state [5, 7]
+      pop();           // Restore canvas state 
     }
   }
 }
