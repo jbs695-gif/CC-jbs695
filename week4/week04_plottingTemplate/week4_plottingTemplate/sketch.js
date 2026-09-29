@@ -45,7 +45,11 @@ function myDrawing() {
   background(240);
   stroke(100, 50, 120);
   strokeWeight(2);
-  noFill(); // Leaves shapes hollow 
+  if(mouseIsPressed){
+     fill(7, 59, 143);
+  } else {
+    fill(100, 50, 125);
+  }
 
   let xSpacing = 80;
   let ySpacing = 80;
@@ -65,16 +69,8 @@ function myDrawing() {
       
       pop(); // Restore canvas state 
     }
-//setting mouse press to be axis based
-function mousePressed() {
-  if (mouseX < 50) {
-    // Code to run if the mouse is on the left.
-  }
+//setting mouse press to chnage coloe
 
-  if (mouseY > 50) {
-    // Code to run if the mouse is near the bottom.
-  }
-}
 
   }
 } 
