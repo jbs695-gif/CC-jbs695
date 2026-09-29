@@ -65,16 +65,17 @@ function myDrawing() {
       
       pop(); // Restore canvas state 
     }
-//setting stroke color and weight when user clicks
-    function mousePressed() {
-      stroke ('deeppurple') ;
-      strokeWeight(3) ;
-    }
+//setting mouse press to be axis based
+function mousePressed() {
+  if (mouseX < 50) {
+    // Code to run if the mouse is on the left.
+  }
 
-    //setting stroke and color when user releases click
-    function mouseReleased() {
-      stroke('lilac');
-    }
+  if (mouseY > 50) {
+    // Code to run if the mouse is near the bottom.
+  }
+}
+
   }
 } 
 // Tip: When plotting, strokeWeight() doesn't affect your drawing. 
