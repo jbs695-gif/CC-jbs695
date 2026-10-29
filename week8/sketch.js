@@ -8,7 +8,7 @@ function setup() {
 }
 
 function draw() {
-  background(255, 0, 0);
+  background(180, 210, 235);
 
 
   for (i=0; i<pos.length; i++) {
