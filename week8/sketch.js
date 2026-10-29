@@ -1,6 +1,6 @@
-//Array methods from class
 
 
+//Array methods from class notes
 let pos = [];
 
 function setup() {
@@ -25,7 +25,7 @@ function keyPressed() {
   pos.pop();
   //pos.shift();
 }
-// Custom function to draw a snowflake centered at (x, y)
+// Custom function to draw a snowflake centered at (x, y), designed w/ LLM guidance
 function drawSnowflake(x, y) {
   push();            // Save transformation state
   translate(x, y);   // Move origin to the snowflake position
@@ -41,4 +41,16 @@ function drawSnowflake(x, y) {
   }
 
   pop();             // Restore transformation state
+}
+
+//attempt at making a class
+class Snowflake {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  draw() {
+    drawSnowflake(this.x, this.y);
+  }
 }
