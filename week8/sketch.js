@@ -48,9 +48,28 @@ class Snowflake {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.speed = 1; // Falling speed
   }
 
-  draw() {
-    drawSnowflake(this.x, this.y);
+  // Updates the snowflake's position, using Melody's falling shapes notes + LLM for guidance
+  update() {
+    this.y += this.speed;
+  }
+
+  // Draws the snowflake
+  display() {
+    push();
+    translate(this.x, this.y);
+    stroke(255);
+    strokeWeight(2);
+
+    for (let a = 0; a < 6; a++) {
+      rotate(PI / 3);
+      line(0, 0, 0, 20);
+      line(0, 10, -5, 14);
+      line(0, 10, 5, 14);
+    }
+
+    pop();
   }
 }
