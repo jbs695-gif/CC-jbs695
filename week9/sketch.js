@@ -1,82 +1,59 @@
-let snowflakes = [];
-let audioFile;
+let pos = [];
+let song;
 let amp;
-let fft;
 
 async function setup() {
   let canvas = createCanvas(600, 600);
-  canvas.parent('week9-sketch'); // Testing linking to previous sketch, since sketch broke when I combined.
+  canvas.parent('week5-sketch'); // Links to your index.html container
 
-  userStartAudio(); // Audio wasn't starting, I think bc I needed this; searched issue and found on p5 library site
+  // Enable audio playback for modern browsers
+  userStartAudio();
 
-  //brought in Let It Go and added to media folder like our images; worked with LLM to figure out how to load and loop audio;
-  audioFile = await loadSound('media/Let It Go.mp3');
-  audioFile.loop();
+  //Brought in mp3 file to media folder, the way we bring in images
+  song = await loadSound("media/Let It Go.mp3");
+  song.loop();
 
+  // Create an amplitude object to track volume
   amp = new p5.Amplitude();
-  fft = new p5.FFT();
 }
 
 function draw() {
-  // 1. Measure Audio Properties
-  let volume = amp.getLevel();           // Amplitude (0.0 to 1.0)
-  fft.analyze();
-  let bass = fft.getEnergy("bass");       // Bass energy (0 to 255)
-  let treble = fft.getEnergy("treble");   // High treble/chimes (0 to 255)
+  background(180, 210, 235);
 
-  // Relationship 3: Volume shifts background atmosphere
-  let bgViolet = map(volume, 0, 0.5, 210, 255);
-  background(140, 180, bgViolet);
+  // Measure current audio volume level (0.0 to 1.0)
+  let vol = amp.getLevel();
 
-  // Loop backward through array when updating/drawing objects
-  for (let i = snowflakes.length - 1; i >= 0; i--) {
-    snowflakes[i].update(bass);           // Relationship 1: Bass speeds up falling
-    snowflakes[i].display(treble, volume); // Relationship 2: Treble stretches branches
+  // Map volume to dynamic snowflake arm length
+  let armLength = map(vol, 0, 0.5, 15, 35);
+
+  // Draw each snowflake from your position array
+  for (let i = 0; i < pos.length; i++) {
+    drawSnowflake(pos[i][0], pos[i][1], armLength);
   }
 }
-//snowflake construction 
+
 function mousePressed() {
-  // Spawn a new audio-reactive snowflake on click
-  snowflakes.push(new Snowflake(mouseX, mouseY));
+  pos.push([mouseX, mouseY]);
 }
 
-class Snowflake {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.baseSpeed = 1;
+function keyPressed() {
+  pos.pop();
+}
+
+// Custom function modified slightly to accept dynamic arm length
+function drawSnowflake(x, y, armLength) {
+  push();
+  translate(x, y);
+  stroke(255);
+  strokeWeight(2);
+
+  // 6-sided symmetry
+  for (let a = 0; a < 6; a++) {
+    rotate(PI / 3);
+    line(0, 0, 0, armLength);        // Main arm grows with volume!
+    line(0, 10, -5, 14);             // Left branch
+    line(0, 10, 5, 14);              // Right branch
   }
 
-  update(bassEnergy) {
-    // Bass boost accelerates falling motion
-    let speedBoost = map(bassEnergy, 0, 255, 0, 4);
-    this.y += this.baseSpeed + speedBoost;
-
-    // Reset to top if it falls off the screen
-    if (this.y > height + 20) {
-      this.y = -20;
-    }
-  }
-
-  display(trebleEnergy, vol) {
-    push();
-    translate(this.x, this.y);
-
-    // Volume controls snowflake brightness
-    let bright = map(vol, 0, 0.5, 200, 255);
-    stroke(bright);
-    strokeWeight(2);
-
-    // High treble expands the outer snowflake branches
-    let branchLength = map(trebleEnergy, 0, 255, 14, 26);
-
-    for (let a = 0; a < 6; a++) {
-      rotate(PI / 3);
-      line(0, 0, 0, 20);
-      line(0, 10, -5, branchLength);
-      line(0, 10, 5, branchLength);
-    }
-
-    pop();
-  }
+  pop();
 }
