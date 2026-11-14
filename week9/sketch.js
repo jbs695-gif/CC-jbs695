@@ -7,7 +7,7 @@ async function setup() {
   createCanvas(600, 600);
 
   // 2. Load audio asynchronously (p5.js v2 pattern)
-  song = await loadSound('media/let_it_go.mp3');
+  song = await loadSound('carol/let_it_go.mp3');
 
   // 3. Create amplitude analyzer to track volume
   amp = new p5.Amplitude();
