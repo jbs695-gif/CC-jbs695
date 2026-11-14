@@ -5,32 +5,32 @@ let amp;
 async function setup() {
   createCanvas(600, 600);
 
-  // Load sound asynchronously (p5.js v2 pattern)
-  song = await loadSound("media/let_it_go.mp3");
-  amp = new p5.Amplitude();
+  try {
+    // Wait for the sound file promise to settle before proceeding
+    song = await loadSound("media/let_it_go.mp3");
+    amp = new p5.Amplitude();
+  } catch (err) {
+    console.error("Error loading audio file:", err);
+  }
 }
 
 function draw() {
   background(180, 210, 235);
 
-  let vol = amp.getLevel();
+  let vol = amp ? amp.getLevel() : 0;
   let armLength = map(vol, 0, 0.5, 15, 35);
 
-  // Loop through stored snowflake positions
   for (let i = 0; i < pos.length; i++) {
-    // Access index [0] for X and index [1] for Y
-    drawSnowflake(pos[i][0], pos[i][1], armLength);
+    drawSnowflake(pos[i], pos[i][6], armLength);
   }
 }
 
 function mousePressed() {
-  // Unlock audio and start song on first click
   userStartAudio();
   if (song && !song.isPlaying()) {
     song.loop();
   }
 
-  // Add click coordinates [x, y] to pos array
   pos.push([mouseX, mouseY]);
 }
 
