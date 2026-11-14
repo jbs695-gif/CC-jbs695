@@ -6,7 +6,7 @@ async function setup() {
   createCanvas(600, 600);
 
   // Load sound asynchronously (p5.js v2 pattern)
-  song = await loadSound('carol/let_it_go.mp3');
+  song = await loadSound("media/let_it_go.mp3");
   amp = new p5.Amplitude();
 }
 
