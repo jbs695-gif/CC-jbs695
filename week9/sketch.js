@@ -9,8 +9,8 @@ async function setup() {
 
   userStartAudio(); // Audio wasn't starting, I think bc I needed this; searched issue and found on p5 library site
 
-  //worked with LLM to figure out how to load and loop audio
-  audioFile = await loadSound('winter_carol.mp3');
+  //brought in Let It Go and added to media folder like our images; worked with LLM to figure out how to load and loop audio;
+  audioFile = await loadSound('media/Let It Go.mp3');
   audioFile.loop();
 
   amp = new p5.Amplitude();
