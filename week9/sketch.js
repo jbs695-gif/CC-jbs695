@@ -18,7 +18,7 @@ function draw() {
 
   // Loop through stored snowflake positions
   for (let i = 0; i < pos.length; i++) {
-    // FIX: Access index [0] for X and index [1] for Y!
+    // Access index [0] for X and index [1] for Y
     drawSnowflake(pos[i][0], pos[i][1], armLength);
   }
 }
