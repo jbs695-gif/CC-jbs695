@@ -20,8 +20,7 @@ async function setup() {
     sound = await loadSound('media/let_it_go.mp3');
     amp = new p5.Amplitude();
     sound.connect(amp);
-  } catch (err) {
-    console.error("Could not load sound file:", err);
+ 
   }
 }
 
