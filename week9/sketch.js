@@ -9,7 +9,7 @@ async function setup() {
 
   userStartAudio(); // Audio wasn't starting, I think bc I needed this; searched issue and found on p5 library site
 
-  // Load sound using async/await (No preload!)
+  //worked with LLM to figure out how to load and loop audio
   audioFile = await loadSound('winter_carol.mp3');
   audioFile.loop();
 
@@ -34,7 +34,7 @@ function draw() {
     snowflakes[i].display(treble, volume); // Relationship 2: Treble stretches branches
   }
 }
-
+//snowflake construction 
 function mousePressed() {
   // Spawn a new audio-reactive snowflake on click
   snowflakes.push(new Snowflake(mouseX, mouseY));
