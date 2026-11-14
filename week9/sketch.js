@@ -3,44 +3,48 @@ let song;
 let amp;
 
 async function setup() {
-  let canvas = createCanvas(600, 600);
-  canvas.parent('week8-sketch'); // Links to your index.html container
+  
+  createCanvas(600, 600);
 
-  // Enable audio playback for modern browsers
-  userStartAudio();
+  // 2. Load audio asynchronously (p5.js v2 pattern)
+  song = await loadSound('media/let_it_go.mp3');
 
-  //Brought in mp3 file to media folder, the way we bring in images
-  song = await loadSound("media/let_it_go.mp3");
-  song.loop();
-
-  // Create an amplitude object to track volume
+  // 3. Create amplitude analyzer to track volume
   amp = new p5.Amplitude();
 }
 
 function draw() {
   background(180, 210, 235);
 
-  // Measure current audio volume level (0.0 to 1.0)
+  // 4. Measure current volume level (0.0 to 1.0)
   let vol = amp.getLevel();
 
-  // Map volume to dynamic snowflake arm length
+  // Map audio volume to dynamic snowflake arm length
   let armLength = map(vol, 0, 0.5, 15, 35);
 
-  // Draw each snowflake from your position array
+  // 5. Draw each snowflake saved in your array
   for (let i = 0; i < pos.length; i++) {
-    drawSnowflake(pos[i][0], pos[i][1], armLength);
+    drawSnowflake(pos[i], pos[i][7], armLength);
   }
 }
 
 function mousePressed() {
+  // Unlock browser audio context & start song on first click
+  userStartAudio();
+  if (song && !song.isPlaying()) {
+    song.loop();
+  }
+
+  // Add click position to array
   pos.push([mouseX, mouseY]);
 }
 
 function keyPressed() {
+  // Remove last snowflake
   pos.pop();
 }
 
-// Custom function modified slightly to accept dynamic arm length
+// Custom function to draw a snowflake with dynamic arm length
 function drawSnowflake(x, y, armLength) {
   push();
   translate(x, y);
@@ -50,7 +54,7 @@ function drawSnowflake(x, y, armLength) {
   // 6-sided symmetry
   for (let a = 0; a < 6; a++) {
     rotate(PI / 3);
-    line(0, 0, 0, armLength);        // Main arm grows with volume!
+    line(0, 0, 0, armLength);        // Main arm grows with music volume!
     line(0, 10, -5, 14);             // Left branch
     line(0, 10, 5, 14);              // Right branch
   }
