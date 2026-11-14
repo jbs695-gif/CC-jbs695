@@ -4,13 +4,13 @@ let amp;
 
 async function setup() {
   let canvas = createCanvas(600, 600);
-  canvas.parent('week5-sketch'); // Links to your index.html container
+  canvas.parent('week8-sketch'); // Links to your index.html container
 
   // Enable audio playback for modern browsers
   userStartAudio();
 
   //Brought in mp3 file to media folder, the way we bring in images
-  song = await loadSound("media/Let It Go.mp3");
+  song = await loadSound("media/let_it_go.mp3");
   song.loop();
 
   // Create an amplitude object to track volume
