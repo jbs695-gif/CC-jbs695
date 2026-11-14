@@ -1,4 +1,4 @@
-et pos = [];
+let pos = [];
 let song;
 let amp;
 
