@@ -4,17 +4,17 @@ let snowflakePositions = [];
 async function setup() {
   cnv = createCanvas(600, 600);
 
-  // Attach mouse press directly to the canvas
+  // turning mousepressed into a function to play the sound, w/ LLM guidance
   cnv.mousePressed(playSound);
 
-  // Generate snowflake positions
+  // the snowflake positions
   for (let x = 100; x < width; x += 130) {
     for (let y = 100; y < height; y += 130) {
       snowflakePositions.push([x, y]);
     }
   }
 
-  // Relative path without a leading slash (p5.js v2 async/await pattern)
+  // my attempt, w/ LLM guidance, to load the sound file
   try {
     sound = await loadSound('media/let_it_go.mp3');
     amp = new p5.Amplitude();
@@ -25,10 +25,8 @@ async function setup() {
 }
 
 function playSound() {
-  // 1. Unlock browser audio context on tap
   userStartAudio();
 
-  // 2. Start playback if loaded and not already playing
   if (sound && !sound.isPlaying()) {
     sound.loop();
   }
@@ -44,7 +42,7 @@ function draw() {
     drawSnowflake(snowflakePositions[i][0], snowflakePositions[i][1], armLength);
   }
 
-  // Cue text
+  // adding the text at the top to help user know to click
   noStroke();
   fill(255);
   textAlign(CENTER);
@@ -52,6 +50,7 @@ function draw() {
   text('tap canvas to play song', width / 2, 30);
 }
 
+// this is custom snowflake fuction again
 function drawSnowflake(x, y, armLength) {
   push();
   translate(x, y);
