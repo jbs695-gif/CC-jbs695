@@ -16,7 +16,7 @@ async function setup() {
 
   // my attempt, w/ LLM guidance, to load the sound file
   try {
-    sound = await loadSound('media/let.mp3');
+    sound = await loadSound('C:\Users\journ\OneDrive\Documents\Also Github\CC-jbs695\week9\media\let.mp3');
     amp = new p5.Amplitude();
     sound.connect(amp);
   } catch (err) {
