@@ -1,20 +1,3 @@
-let video;
-let handPose;
-let hands = [];
-
-async function setup() {
-  createCanvas(640, 480);
-
-  // Set up webcam capture
-  video = createCapture(VIDEO);
-  video.size(640, 480);
-  video.hide();
-
-  // Load model asynchronously
-  handPose = await ml5.handPose();
-  handPose.detectStart(video, gotHands);
-}
-
 // https://thecodingtrain.com/tracks/ml5js-beginners-guide/ml5/hand-pose
 
 let video;
