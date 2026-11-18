@@ -56,14 +56,7 @@ function draw() {
     textAlign(CENTER, CENTER);
     text("OUCH! You pinched me!", width / 2, 60);
 
-    // Audio effect: play sound tone
-    if (!osc.started) {
-      osc.start();
-      osc.freq(587.33); // Note D5
-    }
-  } else {
-    osc.stop();
-  }
+    
 }
 
 function gotHands(results) {
