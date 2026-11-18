@@ -1,28 +1,33 @@
-// Define a variable to store the HandPose model.
-
-let handPose;
-// Make sure to add "async" before "function setup()".
-
-async function setup() {
-  createCanvas(640, 480); // a common webcam resolution
-  
-// Wait until the HandPose model is fully loaded.
-
-  handPose = await ml5.handPose();
-}
-// Define a variable "video" to store the webcam video.
-
 let video;
 let handPose;
+let hands = [];
 
 async function setup() {
   createCanvas(640, 480);
-  
-// Access the webcam video, resize it to fit the canvas, and hide it from the display.
 
   video = createCapture(VIDEO);
   video.size(640, 480);
   video.hide();
 
   handPose = await ml5.handPose();
+  handPose.detectStart(video, gotHands);
+}
+
+function draw() {
+  background(220);
+  image(video, 0, 0);
+
+  for (let i = 0; i < hands.length; i++) {
+    let hand = hands[i];
+    for (let j = 0; j < hand.keypoints.length; j++) {
+      let keypoint = hand.keypoints[j];
+      fill(0, 255, 0);
+      noStroke();
+      circle(keypoint.x, keypoint.y, 10);
+    }
+  }
+}
+
+function gotHands(results) {
+  hands = results;
 }
