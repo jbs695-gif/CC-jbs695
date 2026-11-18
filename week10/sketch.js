@@ -10,3 +10,19 @@ async function setup() {
 
   handPose = await ml5.handPose();
 }
+// Define a variable "video" to store the webcam video.
+
+let video;
+let handPose;
+
+async function setup() {
+  createCanvas(640, 480);
+  
+// Access the webcam video, resize it to fit the canvas, and hide it from the display.
+
+  video = createCapture(VIDEO);
+  video.size(640, 480);
+  video.hide();
+
+  handPose = await ml5.handPose();
+}
