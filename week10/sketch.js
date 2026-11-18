@@ -1,65 +1,45 @@
-// https://thecodingtrain.com/tracks/ml5js-beginners-guide/ml5/hand-pose
-
 let video;
 let handPose;
 let hands = [];
-let painting;
-let px = 0;
-let py = 0;
 
-function preload() {
-  // Initialize HandPose model with flipped video input
-  handPose = ml5.handPose({ flipped: true });
-}
-
-function mousePressed() {
-  console.log(hands);
-}
-
-function gotHands(results) {
-  hands = results;
-}
-
-function setup() {
+async function setup() {
   createCanvas(640, 480);
 
-  // Create an off-screen graphics buffer for painting
-  painting = createGraphics(640, 480);
-  painting.clear();
-
-  video = createCapture(VIDEO, { flipped: true });
+  video = createCapture(VIDEO);
+  video.size(640, 480);
   video.hide();
 
-  // Start detecting hands
+  // Load model asynchronously (p5.js v2 global mode)
+  handPose = await ml5.handPose();
   handPose.detectStart(video, gotHands);
 }
 
 function draw() {
+  background(220);
   image(video, 0, 0);
 
-  // Ensure at least one hand is detected
+  // Check if at least one hand is detected
   if (hands.length > 0) {
-    let hand = hands[0];
-    let index = hand.index_finger_tip;
+    // Grab the first hand in the array using 
+    let hand = hands;
     let thumb = hand.thumb_tip;
+    let index = hand.index_finger_tip;
 
-    // Compute midpoint between index finger and thumb
-    let x = (index.x + thumb.x) * 0.5;
-    let y = (index.y + thumb.y) * 0.5;
+    // Distance between thumb and index finger
+    let d = dist(thumb.x, thumb.y, index.x, index.y);
 
-    // Draw only if fingers are close together
-    let d = dist(index.x, index.y, thumb.x, thumb.y);
-    if (d < 20) {
-      painting.stroke(255, 255, 0);
-      painting.strokeWeight(8);
-      painting.line(px, py, x, y);
+    // Trigger visual change when pinched close
+    if (d < 30) {
+      background(255, 0, 100);
+
+      fill(255);
+      textSize(48);
+      textAlign(CENTER, CENTER);
+      text("PINCH!", width / 2, height / 2);
     }
-
-    // Update previous position
-    px = x;
-    py = y;
   }
+}
 
-  // Overlay painting on top of the video
-  image(painting, 0, 0);
+function gotHands(results) {
+  hands = results;
 }
