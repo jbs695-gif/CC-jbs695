@@ -33,3 +33,16 @@ function draw() {
 function gotHands(results) {
   hands = results;
 }
+handPose.detectStart(media, callback);
+[
+  {
+    confidence,
+    handedness,
+    keypoints: [{ x, y, confidence, name }, ...],
+    keypoints3D: [{ x, y, z, confidence, name }, ...],
+    index_finger_dip: { x, y, x3D, y3D, z3D },
+    index_finger_mcp: { x, y, x3D, y3D, z3D },
+    ...
+  }
+  ...
+]
